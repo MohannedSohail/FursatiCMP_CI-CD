@@ -1,4 +1,4 @@
-package org.mohanned.fursati.ui.home
+package org.mohanned.fursati.presentation.ui.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,7 +26,7 @@ import fursaticmp.composeapp.generated.resources.notifications
 import fursaticmp.composeapp.generated.resources.search
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.mohanned.fursati.theme.PrimaryColor
+import org.mohanned.fursati.utils.theme.PrimaryColor
 
 
 @OptIn(ExperimentalMaterial3Api::class)

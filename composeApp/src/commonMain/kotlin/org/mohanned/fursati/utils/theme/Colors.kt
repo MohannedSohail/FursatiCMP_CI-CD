@@ -1,4 +1,4 @@
-package org.mohanned.fursati.theme
+package org.mohanned.fursati.utils.theme
 
 import androidx.compose.ui.graphics.Color
 
