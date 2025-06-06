@@ -63,6 +63,13 @@ kotlin {
             // Transitions
             implementation(libs.voyager.transitions)
 
+            // TabNavigator
+            implementation(libs.voyager.tab.navigator)
+
+            //Icons
+            implementation(libs.material.icons.extended)
+
+
 
             //Ktor
             implementation(libs.ktor.client.core)

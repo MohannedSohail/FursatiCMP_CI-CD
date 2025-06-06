@@ -4,13 +4,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-import org.mohanned.fursati.presentation.ui.home.HomeScreen
+import org.mohanned.fursati.presentation.ui.navigation.MainScreen
 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
-        HomeScreen()
+     //   HomeScreen()
+        MainScreen()
 //        var showContent by remember { mutableStateOf(false) }
 //        Column(
 //            modifier = Modifier

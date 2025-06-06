@@ -36,10 +36,10 @@ fun HomeScreen() {
 
     Scaffold(
 
-        topBar = { TopBar() },
-        bottomBar = { BottomAppBar(contentColor = Color.White, containerColor = PrimaryColor) {
-
-        } }
+       // topBar = { TopBar() },
+//        bottomBar = { BottomAppBar(contentColor = Color.White, containerColor = PrimaryColor) {
+//
+//        } }
 
     ) {
 
@@ -52,59 +52,6 @@ fun HomeScreen() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopBar() {
-    TopAppBar(
-        title = {
-            Text(
-                "Fursati", style = TextStyle(
-                    color = PrimaryColor,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
-                modifier = Modifier
-                    .padding(horizontal = 10.dp)
-            )
-        },
-
-        modifier = Modifier,
-//                    .clip(
-//                    shape = RoundedCornerShape(
-//                        bottomStart = 20.dp,
-//                        bottomEnd = 20.dp
-//                    )
-//                ),
-        // colors = TopAppBarDefaults.topAppBarColors(Color.Cyan),
-        actions = {
-            Row {
-                IconButton(onClick = ({})) {
-                    Icon(
-                        painter = painterResource(Res.drawable.search),
-                        contentDescription = "search",
-                        tint = Color.Unspecified
-
-                    )
-                }
-                IconButton(onClick = ({})) {
-                    Icon(
-                        painter = painterResource(Res.drawable.filter),
-                        contentDescription = "filter",
-                        tint = Color.Unspecified
-
-                    )
-                }
-                IconButton(onClick = ({})) {
-                    Icon(
-                        painter = painterResource(Res.drawable.notifications),
-                        contentDescription = "notifications",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-        }
-    )
-}
 
 @Composable
 fun Header() {
