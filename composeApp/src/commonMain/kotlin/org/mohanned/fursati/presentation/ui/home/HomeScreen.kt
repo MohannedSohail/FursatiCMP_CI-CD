@@ -37,6 +37,8 @@ fun HomeScreen() {
 
             Header()
 
+            JobItem()
+
         }
 
     }
