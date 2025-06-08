@@ -3,6 +3,7 @@ package org.mohanned.fursati
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mohanned.fursati.presentation.ui.jobDetails.JobDetails
 
 import org.mohanned.fursati.presentation.ui.navigation.MainScreen
 
@@ -10,8 +11,8 @@ import org.mohanned.fursati.presentation.ui.navigation.MainScreen
 @Preview
 fun App() {
     MaterialTheme {
-     //   HomeScreen()
-        MainScreen()
+        JobDetails()
+//        MainScreen()
 //        var showContent by remember { mutableStateOf(false) }
 //        Column(
 //            modifier = Modifier

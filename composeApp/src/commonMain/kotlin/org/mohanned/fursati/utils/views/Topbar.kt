@@ -47,14 +47,14 @@ fun TopBar(screenTitle: String) {
         // colors = TopAppBarDefaults.topAppBarColors(Color.Cyan),
         actions = {
             if (screenTitle == "Settings") {
-                Icon(
-                    painter = painterResource(Res.drawable.notifications),
-                    contentDescription = "notifications",
-                    tint = Color.Unspecified,
-                    modifier = Modifier
-                        .padding(horizontal = 12.dp)
-
-                )
+                IconButton(onClick = ({})) {
+                    Icon(
+                        painter = painterResource(Res.drawable.notifications),
+                        contentDescription = "notifications",
+                        tint = Color.Unspecified,
+                        modifier = Modifier.padding(horizontal = 12.dp)
+                    )
+                }
 
             } else {
                 Row {
