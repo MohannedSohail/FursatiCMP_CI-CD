@@ -51,8 +51,7 @@ fun TopBar(screenTitle: String) {
                     Icon(
                         painter = painterResource(Res.drawable.notifications),
                         contentDescription = "notifications",
-                        tint = Color.Unspecified,
-                        modifier = Modifier.padding(horizontal = 12.dp)
+                        tint = Color.Unspecified
                     )
                 }
 

@@ -13,25 +13,30 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
 
-@Composable
-fun BookmarkScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Bookmark Screen",
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
-            value = "",
-            onValueChange = { },
-            label = { Text("Search...") },
-            modifier = Modifier.fillMaxWidth()
-        )
+class BookmarkScreen() : Screen {
+
+
+    @Composable
+    override fun Content() {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Bookmark Screen",
+                style = MaterialTheme.typography.headlineMedium
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextField(
+                value = "",
+                onValueChange = { },
+                label = { Text("Search...") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }

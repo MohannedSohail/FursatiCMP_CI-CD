@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
 import fursaticmp.composeapp.generated.resources.Res
 import fursaticmp.composeapp.generated.resources.earth
 import fursaticmp.composeapp.generated.resources.eye
@@ -57,31 +58,35 @@ import org.mohanned.fursati.utils.theme.ReadMoreBtnColor
 import org.mohanned.fursati.utils.views.RoundedCornerTopBar
 
 
-@Composable
-@Preview
-fun JobDetails() {
-    Scaffold(
+class JobDetails() : Screen {
 
-        topBar = { RoundedCornerTopBar("Back") },
+    @Composable
+    @Preview
+    override fun Content() {
+        Scaffold(
+
+            topBar = { RoundedCornerTopBar("Back", onClick = ({})) },
 
 
-        ) {
+            ) {
 
-        Column(
-            modifier = Modifier.fillMaxSize().padding(
-                top = 90.dp,
-                bottom = 50.dp,
-                start = 20.dp,
-                end = 20.dp,
-            ).verticalScroll(rememberScrollState(), true)
-        ) {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(
+                    top = 90.dp,
+                    bottom = 50.dp,
+                    start = 20.dp,
+                    end = 20.dp,
+                ).verticalScroll(rememberScrollState(), true)
+            ) {
 
-            JobDetailsItem()
-            DetailsSection()
-            SkillsSection()
-            JobDescriptionSection()
-            CandidateRequirementsSection()
-            ApplyBtn()
+                JobDetailsItem()
+                DetailsSection()
+                SkillsSection()
+                JobDescriptionSection()
+                CandidateRequirementsSection()
+                ApplyBtn()
+
+            }
 
         }
 
@@ -92,8 +97,9 @@ fun JobDetails() {
 @Composable
 fun ApplyBtn() {
     ElevatedButton(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 40.dp).shadow(15.dp,
-            RoundedCornerShape(12.dp),true,BtnShadowColor,BtnShadowColor
+        modifier = Modifier.fillMaxWidth().padding(vertical = 40.dp).shadow(
+            15.dp,
+            RoundedCornerShape(12.dp), true, BtnShadowColor, BtnShadowColor
         ),
         onClick = {},
         shape = RoundedCornerShape(12.dp),
@@ -271,7 +277,7 @@ fun DetailsSection() {
 }
 
 @Composable
-private fun DetailsSectionCardItem(cardTitle: String, cardInfo: String) {
+fun DetailsSectionCardItem(cardTitle: String, cardInfo: String) {
     Card(
         modifier = Modifier.background(JobCardColor),
         shape = RoundedCornerShape(8.dp)
@@ -286,7 +292,7 @@ private fun DetailsSectionCardItem(cardTitle: String, cardInfo: String) {
                     color = PrimaryColor
                 )
             )
-            if (cardTitle == "Country of Employment") {
+            if (cardTitle == "Country of Employment" || cardTitle == "Country") {
                 Row(
                     modifier = Modifier.weight(1f),
                     horizontalArrangement = Arrangement.End,

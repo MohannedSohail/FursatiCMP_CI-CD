@@ -1,7 +1,11 @@
 package org.mohanned.fursati.presentation.ui.home
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,18 +17,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -45,6 +56,7 @@ import fursaticmp.composeapp.generated.resources.job_type
 import fursaticmp.composeapp.generated.resources.price
 import fursaticmp.composeapp.generated.resources.pure_company
 import fursaticmp.composeapp.generated.resources.save
+import fursaticmp.composeapp.generated.resources.saved
 import fursaticmp.composeapp.generated.resources.share
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -57,13 +69,15 @@ import org.mohanned.fursati.utils.theme.PrimaryColor
 @Composable
 @Preview
 
-fun JobItem() {
+fun JobItem(onClick: () -> Unit,onShareIconClick: () -> Unit) {
+    var visibile by remember { mutableStateOf(true) }
+
     Box(
         modifier = Modifier.fillMaxWidth().padding(vertical = 15.dp),
         contentAlignment = Alignment.TopEnd
     ) {
 
-        Card(modifier = Modifier.background(JobCardColor), shape = RoundedCornerShape(20.dp)) {
+        Card(modifier = Modifier.background(JobCardColor).clip(RoundedCornerShape(20.dp)).clickable(onClick=onClick), shape = RoundedCornerShape(20.dp)) {
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 14.dp, top = 12.dp, bottom = 16.dp, end = 5.dp)
@@ -142,9 +156,7 @@ fun JobItem() {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.End
                     ) {
-                        IconButton(onClick = {
-
-                        }) {
+                        IconButton(onClick = onShareIconClick ) {
                             Icon(
                                 painterResource(Res.drawable.share),
                                 contentDescription = "",
@@ -152,15 +164,35 @@ fun JobItem() {
                             )
 
                         }
-                        IconButton(onClick = {
 
-                        }) {
-                            Icon(
-                                painterResource(Res.drawable.save),
-                                contentDescription = "",
-                                tint = Color.Unspecified,
+                        Crossfade(
+                            targetState = visibile, label = "icon_crossfade", animationSpec = tween(
+                                durationMillis = 600,
+                                delayMillis = 200,
+                                easing = FastOutLinearInEasing
+                            )
+                        ) { state ->
 
-                                )
+                            IconButton(onClick = ({
+                                visibile = !visibile
+
+                            })) {
+                                Icon(
+                                    painter = painterResource(
+                                        if (state) {
+                                            Res.drawable.save
+
+                                        } else {
+                                            Res.drawable.saved
+
+                                        }
+                                    ),
+                                    contentDescription = "",
+                                    tint = Color.Unspecified,
+
+                                    )
+
+                            }
 
                         }
                     }
@@ -284,7 +316,8 @@ fun JobItem() {
 
                 }
 
-                Spacer(modifier = Modifier.height(1.dp).fillMaxWidth().background(JobLineColor))
+                HorizontalDivider(thickness = 2.dp, color = JobLineColor)
+
                 Text("Expire In : 14 days ", modifier = Modifier.padding(start = 6.dp, top = 8.dp),style = TextStyle(
                     fontSize = 14.sp,
                     color = Color.Black,

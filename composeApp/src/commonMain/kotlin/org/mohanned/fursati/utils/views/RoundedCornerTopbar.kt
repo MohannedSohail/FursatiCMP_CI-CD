@@ -18,16 +18,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fursaticmp.composeapp.generated.resources.Res
 import fursaticmp.composeapp.generated.resources.back_arrow
+import fursaticmp.composeapp.generated.resources.options
 import org.jetbrains.compose.resources.painterResource
 import org.mohanned.fursati.utils.theme.PrimaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RoundedCornerTopBar(screenTitle: String) {
+fun RoundedCornerTopBar(screenTitle: String, isLeadingIcon: Boolean = false,    onClick: () -> Unit,
+) {
     TopAppBar(
         title = {
             Text(
-                screenTitle, style = TextStyle(
+                screenTitle,
+                style = TextStyle(
                     color = Color.White,
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Normal,
@@ -43,7 +46,6 @@ fun RoundedCornerTopBar(screenTitle: String) {
                 )
             ),
         colors = TopAppBarDefaults.topAppBarColors(PrimaryColor),
-
         navigationIcon = {
             IconButton(onClick = ({})) {
                 Icon(
@@ -52,6 +54,19 @@ fun RoundedCornerTopBar(screenTitle: String) {
                     tint = Color.Unspecified
                 )
             }
+
+        },
+
+        actions = {
+            if (isLeadingIcon == true)
+                IconButton(onClick = onClick) {
+                    Icon(
+                        painter = painterResource(Res.drawable.options),
+                        contentDescription = "back_arrow",
+                        tint = Color.Unspecified
+                    )
+                }
+
 
         }
     )
