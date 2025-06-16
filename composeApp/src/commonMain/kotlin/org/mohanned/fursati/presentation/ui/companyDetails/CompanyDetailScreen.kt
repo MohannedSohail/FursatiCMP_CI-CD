@@ -103,12 +103,12 @@ fun CompanyDetailsScreen() {
                 },
             ) {
                 Column(
-                    modifier = Modifier.fillMaxSize().padding(
+                    modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(
                         top = 90.dp,
                         bottom = 30.dp,
                         start = 20.dp,
                         end = 20.dp,
-                    ).verticalScroll(rememberScrollState())
+                    )
                 ) {
 
                     CompanyInfoSection()

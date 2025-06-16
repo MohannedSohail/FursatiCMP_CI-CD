@@ -24,7 +24,7 @@ import org.mohanned.fursati.utils.theme.PrimaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RoundedCornerTopBar(screenTitle: String, isLeadingIcon: Boolean = false,    onClick: () -> Unit,
+fun RoundedCornerTopBar(screenTitle: String, isLeadingIcon: Boolean = false,    onClick: () -> Unit = {},
 ) {
     TopAppBar(
         title = {

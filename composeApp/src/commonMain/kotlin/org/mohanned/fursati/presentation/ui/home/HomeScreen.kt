@@ -71,12 +71,7 @@ class HomeScreen() : Screen {
                     modifier = Modifier.fillMaxSize().padding(vertical = 100.dp, horizontal = 20.dp)
                 ) {
 
-                    Header(onClick = ({
-
-                        navigator?.push(JobDetails())
-                        println("navigator${navigator?.size}")
-
-                    }))
+                    Header()
 
                     LazyColumn(modifier = Modifier.padding(bottom = 30.dp)) {
                         items(20) {
@@ -185,7 +180,9 @@ private fun shareBottomSheetContent() {
 
 
 @Composable
-fun Header(onClick: () -> Unit) {
+fun Header() {
+    Spacer(modifier = Modifier.height(10.dp))
+
     Text(
         "Welcome", style = TextStyle(
             color = Color(0xffA0B6B4),
@@ -193,7 +190,7 @@ fun Header(onClick: () -> Unit) {
             fontWeight = FontWeight.SemiBold,
 
             ),
-        modifier = Modifier.clickable(onClick = onClick)
+        modifier = Modifier
     )
     Spacer(modifier = Modifier.height(6.dp))
     Text(
