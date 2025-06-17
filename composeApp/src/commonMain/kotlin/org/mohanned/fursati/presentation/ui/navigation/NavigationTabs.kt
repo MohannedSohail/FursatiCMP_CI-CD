@@ -1,14 +1,21 @@
 // الحل الكامل - تعديل NavigationTabs.kt
 package org.mohanned.fursati.presentation.ui.navigation
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BookmarkAdd
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Work
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -16,20 +23,32 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.SlideTransition
+import org.jetbrains.compose.resources.painterResource
 import org.mohanned.fursati.presentation.ui.bookmark.BookmarkScreen
 import org.mohanned.fursati.presentation.ui.companyDetails.CompanyDetailsScreen
+import org.mohanned.fursati.presentation.ui.faqs.FaqsScreen
+import org.mohanned.fursati.presentation.ui.help.HelpScreen
 import org.mohanned.fursati.presentation.ui.home.HomeScreen
 import org.mohanned.fursati.presentation.ui.profile.ProfileScreen
 import org.mohanned.fursati.presentation.ui.settings.Settings
@@ -60,9 +79,9 @@ object HomeTab : Tab {
     @Composable
     override fun Content() {
         // استخدام Navigator داخل التاب للتنقل إلى JobDetails
-        Navigator(HomeScreen()) { navigator ->
-            SlideTransition(navigator)
-        }
+        val navigator = LocalNavigator.currentOrThrow
+
+        HomeScreen()
     }
 }
 
@@ -85,9 +104,18 @@ object BookmarkTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(BookmarkScreen()) { navigator ->
-            navigator.lastItem.Content()
-        }
+        val navigator = LocalNavigator.currentOrThrow
+        BookmarkScreen()
+//        Button(
+//            onClick = { navigator.push(FaqsScreen()) },
+//            modifier = Modifier.fillMaxWidth().padding(30.dp)
+//        ) {
+//            Text("Go to Detail (Hide Bottom Nav)")
+//        }
+
+//        Navigator(BookmarkScreen()) { navigator ->
+//            navigator.lastItem.Content()
+//        }
     }
 }
 
@@ -110,7 +138,10 @@ object ProfileTab : Tab {
 
     @Composable
     override fun Content() {
-        CompanyDetailsScreen()
+        val navigator = LocalNavigator.currentOrThrow
+
+        ProfileScreen()
+//        CompanyDetailsScreen()
 //        Navigator(ProfileScreen()) { navigator ->
 //            navigator.lastItem.Content()
 //        }
@@ -136,59 +167,68 @@ object SettingsTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(Settings()) { navigator ->
-            navigator.lastItem.Content()
-        }
+        val navigator = LocalNavigator.currentOrThrow
+        Settings(onClick = ({ navigator.push(FaqsScreen()) }))
     }
 }
 
-class MainScreen : Screen {
-    @Composable
-    override fun Content() {
-        TabNavigator(HomeTab) { tabNavigator ->
-            val currentTab = tabNavigator.current
-            val navigator = LocalNavigator.current
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScreen() {
+    var showBottomBar by remember { mutableStateOf(true) }
+    var showTopBar by remember { mutableStateOf(true) }
 
-            val topBarTitle = when (currentTab.options.title) {
+    TabNavigator(HomeTab) { tabNavigator ->
+        Navigator(HomeTab) { navigator ->
+
+            val topBarTitle = when (tabNavigator.current.options.title) {
                 "Jobs" -> "Fursati"
                 "Bookmark" -> "Bookmark"
                 "Settings" -> "Settings"
                 else -> "Profile"
             }
-
-            val showBottomBar = remember(navigator?.lastItem) {
-                // إخفاء Bottom Bar في الشاشات العميقة
-                navigator?.size == 1 // فقط في الشاشة الرئيسية لكل تاب
-            }
-
-            println("navigator tabs ${navigator!!.lastItem.key}")
-            println("navigator size ${navigator.lastItem}")
-            println("navigator tabNavigator ${tabNavigator.current.key}")
-            println("navigator showBottomBar ${showBottomBar}")
-
             Scaffold(
                 topBar = {
-                    TopBar(topBarTitle)
+                    AnimatedVisibility(
+                        visible = showTopBar,
+                        enter = slideInVertically(initialOffsetY = { it }),
+                    ){
+                    TopBar(topBarTitle)}
+                },
+
+                content = {
+                    if (navigator.lastItem is Tab) {
+                        CurrentTab() // This will display the currently selected tab
+                    } else {
+                        CurrentScreen() // This will display the DetailScreen or any other non-tab screen
+                    }
                 },
                 bottomBar = {
-                    if (currentTab.options.index == HOME_TAB_INDEX || currentTab.options.index == BOOKMARK_TAB_INDEX || currentTab.options.index == PROFILE_TAB_INDEX || currentTab.options.index == SETTINGS_TAB_INDEX) {
+                    AnimatedVisibility(
+                        visible = showBottomBar,
+                        enter = slideInVertically(initialOffsetY = { it }),
+                        exit = slideOutVertically(targetOffsetY = { it })
+                    ) {
                         NavigationBar(containerColor = PrimaryColor) {
                             TabNavigationItem(HomeTab, tabNavigator)
                             TabNavigationItem(BookmarkTab, tabNavigator)
                             TabNavigationItem(SettingsTab, tabNavigator)
                             TabNavigationItem(ProfileTab, tabNavigator)
                         }
-
                     }
+                }
+            )
 
+            DisposableEffect(navigator.lastItem) {
+                showBottomBar = when (navigator.lastItem) {
+                    is HomeTab, is BookmarkTab, is SettingsTab, is ProfileTab -> true
+                    else -> false
                 }
-            ) {
-                Crossfade(
-                    animationSpec = tween(300, delayMillis = 100),
-                    targetState = LocalTabNavigator.current.current
-                ) { tab ->
-                    tab.Content()
+                showTopBar = when (navigator.lastItem) {
+                    is HomeTab, is BookmarkTab, is SettingsTab, is ProfileTab -> true
+                    else -> false
                 }
+                onDispose { }
             }
         }
     }

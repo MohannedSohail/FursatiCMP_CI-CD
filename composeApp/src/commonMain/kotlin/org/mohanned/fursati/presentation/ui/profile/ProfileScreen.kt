@@ -15,38 +15,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 
-class ProfileScreen() : Screen {
-    @Composable
-
-    override fun Content() {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center
+@Composable
+fun ProfileScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Profile Screen",
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Card(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
-                text = "Profile Screen",
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Card(
-                modifier = Modifier.fillMaxWidth()
+            Column(
+                modifier = Modifier.padding(16.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Text(
-                        text = "User Profile",
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Text(
-                        text = "john.doe@example.com",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
+                Text(
+                    text = "User Profile",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = "john.doe@example.com",
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
         }
-
     }
+
 }

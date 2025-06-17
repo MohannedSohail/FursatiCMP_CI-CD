@@ -75,239 +75,234 @@ import org.mohanned.fursati.utils.theme.PrimaryColor
 import org.mohanned.fursati.utils.theme.SwitchEnabledColor
 import org.mohanned.fursati.utils.views.ActionRow
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Settings(onClick: () -> Unit)  {
+    val navigator = LocalNavigator.current
+    val privacySheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+    var showPrivacySheet by remember { mutableStateOf(false) }
 
-class Settings() : Screen {
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    @Preview
-    override fun Content() {
-        val navigator = LocalNavigator.current
-        val privacySheetState = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true
-        )
-        var showPrivacySheet by remember { mutableStateOf(false) }
+    var showNotificationSheet by remember { mutableStateOf(false) }
 
-        var showNotificationSheet by remember { mutableStateOf(false) }
+    val notificationSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
 
-        val notificationSheetState = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true
-        )
+    var showLanguageSheet by remember { mutableStateOf(false) }
 
-        var showLanguageSheet by remember { mutableStateOf(false) }
+    val languageSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+    var englishLanguageIsChecked by remember { mutableStateOf(true) }
+    var arabicLanguageIsChecked by remember { mutableStateOf(false) }
+    var notificationIsChecked by remember { mutableStateOf(false) }
+    MaterialTheme {
+        Box {
+            Scaffold {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                        .padding(vertical = 100.dp, horizontal = 20.dp)
+                ) {
+                    Section("General Settings")
 
-        val languageSheetState = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true
-        )
-        var englishLanguageIsChecked by remember { mutableStateOf(true) }
-        var arabicLanguageIsChecked by remember { mutableStateOf(false) }
-        var notificationIsChecked by remember { mutableStateOf(false) }
-        MaterialTheme {
-            Box {
-                Scaffold {
-                    Column(
-                        modifier = Modifier.fillMaxSize()
-                            .padding(vertical = 100.dp, horizontal = 20.dp)
-                    ) {
-                        Section("General Settings")
+                    Spacer(modifier = Modifier.height(22.dp))
 
-                        Spacer(modifier = Modifier.height(22.dp))
+                    Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
+                        SettingsCard(
+                            onClick = ({}),
+                            painterResource(Res.drawable.job_pref),
+                            "Job Preference Country"
+                        )
+                        SettingsCard(onClick, painterResource(Res.drawable.faqs), "FAQs")
 
-                        Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
-                            SettingsCard(
-                                onClick = ({}),
-                                painterResource(Res.drawable.job_pref),
-                                "Job Preference Country"
-                            )
-                            SettingsCard(onClick = ({
-                                navigator?.push(FaqsScreen())
-                            }), painterResource(Res.drawable.faqs), "FAQs")
-
-                            SettingsCard(
-                                onClick = ({}),
-                                painterResource(Res.drawable.help_feedback),
-                                "Help & Feedback"
-                            )
-                            SettingsCard(
-                                onClick = ({
-                                    showPrivacySheet = true
-                                }),
-                                painterResource(Res.drawable.privacy),
-                                "Privacy Policy"
-                            )
-                            SettingsCard(
-                                onClick = ({ showLanguageSheet = true }),
-                                painterResource(Res.drawable.language_pref),
-                                "Language Prefrence"
-                            )
-                            SettingsCard(
-                                onClick = ({ showNotificationSheet = true }),
-                                painterResource(Res.drawable.notification_settings),
-                                "Notification Settings"
-                            )
-                        }
-                    }
-
-                }
-
-                if (showPrivacySheet) {
-                    ModalBottomSheet(
-                        onDismissRequest = { showPrivacySheet = false },
-                        sheetState = privacySheetState,
-                        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                        containerColor = Color.White,
-                    ) {
-                        privacySheetContent()
-
-                    }
-                }
-
-                if (showLanguageSheet) {
-
-                    ModalBottomSheet(
-                        onDismissRequest = { showLanguageSheet = false },
-                        sheetState = languageSheetState,
-                        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                        containerColor = Color.White,
-                    ) {
-                        Column(modifier = Modifier.padding(20.dp)) {
-                            Text(
-                                text = "Language Prefrence",
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Normal,
-                                color = PrimaryColor
-                            )
-
-                            Spacer(modifier = Modifier.height(22.dp))
-
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth().shadow(0.dp, RoundedCornerShape(12.dp), true)
-                                    .clickable {
-                                        arabicLanguageIsChecked = true
-                                        englishLanguageIsChecked = false
-                                    }
-                                    .padding(horizontal = 12.dp, vertical = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(
-                                    painter = painterResource(Res.drawable.pure_company),
-                                    contentDescription = "label",
-                                    tint = Color.Unspecified,
-                                    modifier = Modifier.size(24.dp)
-                                )
-
-                                Spacer(modifier = Modifier.width(12.dp))
-                                Text("العربية", modifier = Modifier.weight(1f), fontSize = 16.sp)
-                                AnimatedVisibility(visible = arabicLanguageIsChecked) {
-                                    Icon(
-                                        Icons.Default.Check,
-                                        contentDescription = "Go",
-                                        tint = PrimaryColor
-                                    )
-                                }
-                            }
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth().shadow(0.dp, RoundedCornerShape(12.dp), true)
-                                    .clickable {
-                                        arabicLanguageIsChecked = false
-                                        englishLanguageIsChecked = true
-
-                                    }
-                                    .padding(horizontal = 12.dp, vertical = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(
-                                    painter = painterResource(Res.drawable.call),
-                                    contentDescription = "label",
-                                    tint = Color.Unspecified,
-                                    modifier = Modifier.size(24.dp)
-                                )
-
-                                Spacer(modifier = Modifier.width(12.dp))
-                                Text("English", modifier = Modifier.weight(1f), fontSize = 16.sp)
-                                AnimatedVisibility(visible = englishLanguageIsChecked) {
-                                    Icon(
-                                        Icons.Default.Check,
-                                        contentDescription = "Go",
-                                        tint = PrimaryColor
-                                    )
-                                }
-                            }
-
-
-                            Spacer(modifier = Modifier.height(16.dp))
-
-
-                        }
-                    }
-
-                }
-                if (showNotificationSheet) {
-                    ModalBottomSheet(
-                        onDismissRequest = { showNotificationSheet = false },
-                        sheetState = notificationSheetState,
-                        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                        containerColor = Color.White,
-                    ) {
-                        Column(modifier = Modifier.padding(20.dp)) {
-                            Text(
-                                text = "Notification Settings",
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Normal,
-                                color = PrimaryColor
-                            )
-
-                            Spacer(modifier = Modifier.height(22.dp))
-
-                            Card(
-                                modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(JobCardColor).padding(horizontal = 16.dp, vertical = 16.dp),
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth().background(JobCardColor),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-
-                                    Text(
-                                        "General Push Notifications",
-                                        modifier = Modifier.weight(1f),
-                                        fontSize = 14.sp,
-                                        fontWeight = FontWeight.SemiBold
-                                    )
-                                    Switch(
-                                        notificationIsChecked,
-                                        onCheckedChange = {
-                                            notificationIsChecked = !notificationIsChecked
-                                        },
-                                        modifier = Modifier,
-                                        colors = SwitchDefaults.colors(
-                                            checkedThumbColor = PrimaryColor,
-                                            checkedTrackColor = SwitchEnabledColor,
-                                            checkedBorderColor = SwitchEnabledColor,
-                                            uncheckedThumbColor = Color.Gray,
-                                            uncheckedTrackColor = Color.LightGray,
-                                            uncheckedBorderColor = Color.LightGray,
-                                        ),
-                                    )
-                                }
-
-                                Text(
-                                    "Recieve general updates and notifications",
-                                    modifier = Modifier.fillMaxWidth().background(JobCardColor),
-                                    fontSize = 14.sp
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(16.dp))
-
-
-                        }
+                        SettingsCard(
+                            onClick = ({}),
+                            painterResource(Res.drawable.help_feedback),
+                            "Help & Feedback"
+                        )
+                        SettingsCard(
+                            onClick = ({
+                                showPrivacySheet = true
+                            }),
+                            painterResource(Res.drawable.privacy),
+                            "Privacy Policy"
+                        )
+                        SettingsCard(
+                            onClick = ({ showLanguageSheet = true }),
+                            painterResource(Res.drawable.language_pref),
+                            "Language Prefrence"
+                        )
+                        SettingsCard(
+                            onClick = ({ showNotificationSheet = true }),
+                            painterResource(Res.drawable.notification_settings),
+                            "Notification Settings"
+                        )
                     }
                 }
 
             }
+
+            if (showPrivacySheet) {
+                ModalBottomSheet(
+                    onDismissRequest = { showPrivacySheet = false },
+                    sheetState = privacySheetState,
+                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                    containerColor = Color.White,
+                ) {
+                    privacySheetContent()
+
+                }
+            }
+
+            if (showLanguageSheet) {
+
+                ModalBottomSheet(
+                    onDismissRequest = { showLanguageSheet = false },
+                    sheetState = languageSheetState,
+                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                    containerColor = Color.White,
+                ) {
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Text(
+                            text = "Language Prefrence",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = PrimaryColor
+                        )
+
+                        Spacer(modifier = Modifier.height(22.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth().shadow(0.dp, RoundedCornerShape(12.dp), true)
+                                .clickable {
+                                    arabicLanguageIsChecked = true
+                                    englishLanguageIsChecked = false
+                                }
+                                .padding(horizontal = 12.dp, vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                painter = painterResource(Res.drawable.pure_company),
+                                contentDescription = "label",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.size(24.dp)
+                            )
+
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text("العربية", modifier = Modifier.weight(1f), fontSize = 16.sp)
+                            AnimatedVisibility(visible = arabicLanguageIsChecked) {
+                                Icon(
+                                    Icons.Default.Check,
+                                    contentDescription = "Go",
+                                    tint = PrimaryColor
+                                )
+                            }
+                        }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth().shadow(0.dp, RoundedCornerShape(12.dp), true)
+                                .clickable {
+                                    arabicLanguageIsChecked = false
+                                    englishLanguageIsChecked = true
+
+                                }
+                                .padding(horizontal = 12.dp, vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                painter = painterResource(Res.drawable.call),
+                                contentDescription = "label",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.size(24.dp)
+                            )
+
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text("English", modifier = Modifier.weight(1f), fontSize = 16.sp)
+                            AnimatedVisibility(visible = englishLanguageIsChecked) {
+                                Icon(
+                                    Icons.Default.Check,
+                                    contentDescription = "Go",
+                                    tint = PrimaryColor
+                                )
+                            }
+                        }
+
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+
+                    }
+                }
+
+            }
+            if (showNotificationSheet) {
+                ModalBottomSheet(
+                    onDismissRequest = { showNotificationSheet = false },
+                    sheetState = notificationSheetState,
+                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                    containerColor = Color.White,
+                ) {
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Text(
+                            text = "Notification Settings",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = PrimaryColor
+                        )
+
+                        Spacer(modifier = Modifier.height(22.dp))
+
+                        Card(
+                            modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(JobCardColor).padding(horizontal = 16.dp, vertical = 16.dp),
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth().background(JobCardColor),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+
+                                Text(
+                                    "General Push Notifications",
+                                    modifier = Modifier.weight(1f),
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                Switch(
+                                    notificationIsChecked,
+                                    onCheckedChange = {
+                                        notificationIsChecked = !notificationIsChecked
+                                    },
+                                    modifier = Modifier,
+                                    colors = SwitchDefaults.colors(
+                                        checkedThumbColor = PrimaryColor,
+                                        checkedTrackColor = SwitchEnabledColor,
+                                        checkedBorderColor = SwitchEnabledColor,
+                                        uncheckedThumbColor = Color.Gray,
+                                        uncheckedTrackColor = Color.LightGray,
+                                        uncheckedBorderColor = Color.LightGray,
+                                    ),
+                                )
+                            }
+
+                            Text(
+                                "Recieve general updates and notifications",
+                                modifier = Modifier.fillMaxWidth().background(JobCardColor),
+                                fontSize = 14.sp
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+
+                    }
+                }
+            }
+
         }
     }
+
 }
 
 @Composable

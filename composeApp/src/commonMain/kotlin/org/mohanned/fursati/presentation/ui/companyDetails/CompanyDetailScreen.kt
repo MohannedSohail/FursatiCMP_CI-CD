@@ -114,8 +114,7 @@ fun CompanyDetailsScreen() {
                     CompanyInfoSection()
                     DetailsSection()
                     BioDescriptionSection(readMoreClick = ({
-                       // showBioSheet = true
-                        showLoginSheet=true
+                        showBioSheet = true
 
                     }))
                     RecentJobsSection()

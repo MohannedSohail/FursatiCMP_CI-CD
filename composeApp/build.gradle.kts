@@ -79,6 +79,8 @@ kotlin {
 
             //kamel for Image loading
             implementation(libs.kamel)
+
+            implementation(libs.kotlinx.serialization.json)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

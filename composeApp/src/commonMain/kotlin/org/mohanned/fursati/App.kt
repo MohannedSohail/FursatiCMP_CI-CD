@@ -16,6 +16,7 @@ fun App() {
 //            SlideTransition(navigator)
 //        }
 
-        HelpScreen()
+        MainScreen()
+//        HelpScreen()
     }
 }

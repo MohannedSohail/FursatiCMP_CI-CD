@@ -1,5 +1,9 @@
 package org.mohanned.fursati.presentation.ui.jobDetails
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,12 +25,20 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -39,6 +51,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import fursaticmp.composeapp.generated.resources.Res
 import fursaticmp.composeapp.generated.resources.earth
 import fursaticmp.composeapp.generated.resources.eye
@@ -47,6 +61,7 @@ import fursaticmp.composeapp.generated.resources.job_star1
 import fursaticmp.composeapp.generated.resources.job_star2
 import fursaticmp.composeapp.generated.resources.pure_company
 import fursaticmp.composeapp.generated.resources.save
+import fursaticmp.composeapp.generated.resources.saved
 import fursaticmp.composeapp.generated.resources.share
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -56,37 +71,162 @@ import org.mohanned.fursati.utils.theme.JobCardColor
 import org.mohanned.fursati.utils.theme.PrimaryColor
 import org.mohanned.fursati.utils.theme.ReadMoreBtnColor
 import org.mohanned.fursati.utils.views.RoundedCornerTopBar
+import org.mohanned.fursati.utils.views.shareBottomSheetContent
 
 
 class JobDetails() : Screen {
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     @Preview
     override fun Content() {
-        Scaffold(
 
-            topBar = { RoundedCornerTopBar("Back", onClick = ({})) },
+        val navigator = LocalNavigator.currentOrThrow
+
+        var showJobDescriptionSheet by remember { mutableStateOf(false) }
+
+        val jobDescriptionSheetState = rememberModalBottomSheetState(
+            skipPartiallyExpanded = true
+        )
+
+        var showShareSheet by remember { mutableStateOf(false) }
+
+        val shareSheetState = rememberModalBottomSheetState(
+            skipPartiallyExpanded = true
+        )
 
 
-            ) {
 
-            Column(
-                modifier = Modifier.fillMaxSize().
-                        verticalScroll(rememberScrollState(), true).padding(
-                    top = 90.dp,
-                    bottom = 50.dp,
-                    start = 20.dp,
-                    end = 20.dp,
-                )
-            ) {
+        Box {
+            Scaffold(
 
-                JobDetailsItem()
-                DetailsSection()
-                SkillsSection()
-                JobDescriptionSection()
-                CandidateRequirementsSection()
-                ApplyBtn()
+                topBar = { RoundedCornerTopBar("Back", onClick = ({})) },
 
+
+                ) {
+
+                Column(
+                    modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState(), true)
+                        .padding(
+                            top = 90.dp,
+                            bottom = 50.dp,
+                            start = 20.dp,
+                            end = 20.dp,
+                        )
+                ) {
+
+                    JobDetailsItem(onShareClick = ({
+                        showShareSheet=true
+                    }))
+                    DetailsSection()
+                    SkillsSection()
+                    JobDescriptionSection(onReadMoreClick = ({
+                        showJobDescriptionSheet=true
+                    }))
+                    CandidateRequirementsSection()
+                    ApplyBtn(onApplyClick = ({
+                        showJobDescriptionSheet=true
+
+                    }))
+
+                }
+
+            }
+            if (showShareSheet) {
+                ModalBottomSheet(
+                    onDismissRequest = { showShareSheet = false },
+                    sheetState = shareSheetState,
+                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                    containerColor = Color.White,
+                ) {
+                    shareBottomSheetContent()
+                }
+            }
+
+
+            if (showJobDescriptionSheet) {
+                ModalBottomSheet(
+                    onDismissRequest = { showJobDescriptionSheet = false },
+                    sheetState = jobDescriptionSheetState,
+                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                    containerColor = Color.White,
+                ) {
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Text(
+                            text = "NOT Registered",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = PrimaryColor
+                        )
+
+                        Spacer(modifier = Modifier.height(14.dp))
+                        Text(
+                            text = "You Are not a member Yet, Do you have an account?",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                        )
+
+                        Spacer(modifier = Modifier.height(30.dp))
+
+                        ElevatedButton(
+                            modifier = Modifier.fillMaxWidth().shadow(
+                                15.dp,
+                                RoundedCornerShape(12.dp), true, BtnShadowColor, BtnShadowColor
+                            ),
+                            onClick = {},
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonColors(
+                                PrimaryColor,
+                                Color.White,
+                                Color.Unspecified,
+                                Color.Unspecified
+                            ),
+
+                            contentPadding = PaddingValues(vertical = 15.dp)
+                        ) {
+
+
+                            Text(
+                                "LOGIN", style = TextStyle(
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            )
+
+
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        OutlinedButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = {},
+                            shape = RoundedCornerShape(12.dp),
+                            border = BorderStroke(1.dp,PrimaryColor),
+                            colors = ButtonColors(
+                                Color.White,
+                                PrimaryColor,
+                                Color.Unspecified,
+                                Color.Unspecified
+                            ),
+
+                            contentPadding = PaddingValues(vertical = 15.dp)
+                        ) {
+
+
+                            Text(
+                                "SIGNUP", style = TextStyle(
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            )
+
+
+                        }
+
+
+                    }
+                }
             }
 
         }
@@ -96,13 +236,13 @@ class JobDetails() : Screen {
 }
 
 @Composable
-fun ApplyBtn() {
+fun ApplyBtn(onApplyClick: () -> Unit) {
     ElevatedButton(
         modifier = Modifier.fillMaxWidth().padding(vertical = 40.dp).shadow(
             15.dp,
             RoundedCornerShape(12.dp), true, BtnShadowColor, BtnShadowColor
         ),
-        onClick = {},
+        onClick = onApplyClick,
         shape = RoundedCornerShape(12.dp),
         colors = ButtonColors(
             PrimaryColor,
@@ -148,7 +288,7 @@ fun Section(secTitle: String) {
 }
 
 @Composable
-fun JobDescriptionSection() {
+fun JobDescriptionSection(onReadMoreClick:() -> Unit) {
 
     Section("Job Description")
     Card(
@@ -167,7 +307,7 @@ fun JobDescriptionSection() {
         )
 
         TextButton(
-            onClick = ({}),
+            onClick = onReadMoreClick,
             colors = ButtonColors(
                 containerColor = Color.Unspecified,
                 contentColor = ReadMoreBtnColor,
@@ -339,7 +479,8 @@ fun DetailsSectionCardItem(cardTitle: String, cardInfo: String) {
 }
 
 @Composable
-fun JobDetailsItem() {
+fun JobDetailsItem(onShareClick: () -> Unit) {
+    var visibile by remember { mutableStateOf(true) }
     Box(
         modifier = Modifier.fillMaxWidth().padding(top = 25.dp),
         contentAlignment = Alignment.TopEnd
@@ -424,9 +565,7 @@ fun JobDetailsItem() {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.End
                     ) {
-                        IconButton(onClick = {
-
-                        }) {
+                        IconButton(onClick = onShareClick) {
                             Icon(
                                 painterResource(Res.drawable.share),
                                 contentDescription = "",
@@ -434,15 +573,34 @@ fun JobDetailsItem() {
                             )
 
                         }
-                        IconButton(onClick = {
+                        Crossfade(
+                            targetState = visibile, label = "icon_crossfade", animationSpec = tween(
+                                durationMillis = 600,
+                                delayMillis = 200,
+                                easing = FastOutLinearInEasing
+                            )
+                        ) { state ->
 
-                        }) {
-                            Icon(
-                                painterResource(Res.drawable.save),
-                                contentDescription = "",
-                                tint = Color.Unspecified,
+                            IconButton(onClick = ({
+                                visibile = !visibile
 
-                                )
+                            })) {
+                                Icon(
+                                    painter = painterResource(
+                                        if (state) {
+                                            Res.drawable.save
+
+                                        } else {
+                                            Res.drawable.saved
+
+                                        }
+                                    ),
+                                    contentDescription = "",
+                                    tint = Color.Unspecified,
+
+                                    )
+
+                            }
 
                         }
                     }

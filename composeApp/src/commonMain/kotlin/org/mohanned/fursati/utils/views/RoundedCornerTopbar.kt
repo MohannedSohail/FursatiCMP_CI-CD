@@ -16,6 +16,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import fursaticmp.composeapp.generated.resources.Res
 import fursaticmp.composeapp.generated.resources.back_arrow
 import fursaticmp.composeapp.generated.resources.options
@@ -26,6 +28,8 @@ import org.mohanned.fursati.utils.theme.PrimaryColor
 @Composable
 fun RoundedCornerTopBar(screenTitle: String, isLeadingIcon: Boolean = false,    onClick: () -> Unit = {},
 ) {
+    val navigator = LocalNavigator.currentOrThrow
+
     TopAppBar(
         title = {
             Text(
@@ -47,7 +51,9 @@ fun RoundedCornerTopBar(screenTitle: String, isLeadingIcon: Boolean = false,    
             ),
         colors = TopAppBarDefaults.topAppBarColors(PrimaryColor),
         navigationIcon = {
-            IconButton(onClick = ({})) {
+            IconButton(onClick = ({
+                navigator.pop()
+            })) {
                 Icon(
                     painter = painterResource(Res.drawable.back_arrow),
                     contentDescription = "back_arrow",
