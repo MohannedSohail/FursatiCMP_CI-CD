@@ -52,6 +52,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fursaticmp.composeapp.generated.resources.Res
@@ -74,83 +75,82 @@ import org.mohanned.fursati.utils.views.ActionRow
 import org.mohanned.fursati.utils.views.RoundedCornerTopBar
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-@Preview
-fun CompanyDetailsScreen() {
+class CompanyDetailsScreen() : Screen {
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    @Preview
+    override fun Content() {
 
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
-    val bioSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
-    val LoginSheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
-    var showLoginSheet by remember { mutableStateOf(false) }
+        val sheetState = rememberModalBottomSheetState(
+            skipPartiallyExpanded = true
+        )
+        val bioSheetState = rememberModalBottomSheetState(
+            skipPartiallyExpanded = true
+        )
+        val LoginSheetState = rememberModalBottomSheetState(
+            skipPartiallyExpanded = true
+        )
+        var showLoginSheet by remember { mutableStateOf(false) }
 
-    var showSheet by remember { mutableStateOf(false) }
-    var showBioSheet by remember { mutableStateOf(false) }
+        var showSheet by remember { mutableStateOf(false) }
+        var showBioSheet by remember { mutableStateOf(false) }
 
-    MaterialTheme {
-        Box() {
-            Scaffold(
-                topBar = {
-                    RoundedCornerTopBar("Back", true, onClick = ({
-                        showSheet = true
-                    }))
-                },
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(
-                        top = 90.dp,
-                        bottom = 30.dp,
-                        start = 20.dp,
-                        end = 20.dp,
-                    )
+        MaterialTheme {
+            Box() {
+                Scaffold(
+                    topBar = {
+                        RoundedCornerTopBar("Back", true, onClick = ({
+                            showSheet = true
+                        }))
+                    },
                 ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
+                            .padding(
+                                top = 90.dp,
+                                bottom = 30.dp,
+                                start = 20.dp,
+                                end = 20.dp,
+                            )
+                    ) {
 
-                    CompanyInfoSection()
-                    DetailsSection()
-                    BioDescriptionSection(readMoreClick = ({
-                        showBioSheet = true
+                        CompanyInfoSection()
+                        DetailsSection()
+                        BioDescriptionSection(readMoreClick = ({
+                            showBioSheet = true
 
-                    }))
-                    RecentJobsSection()
+                        }))
+                        RecentJobsSection()
 
+
+                    }
 
                 }
 
-            }
+                if (showSheet) {
+                    ModalBottomSheet(
+                        onDismissRequest = { showSheet = false },
+                        sheetState = sheetState,
+                        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                        containerColor = Color.White
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(
+                                text = "Take Action",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = PrimaryColor
+                            )
 
-            if (showSheet) {
-                ModalBottomSheet(
-                    onDismissRequest = { showSheet = false },
-                    sheetState = sheetState,
-                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                    containerColor = Color.White
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "Take Action",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = PrimaryColor
-                        )
+                            Spacer(modifier = Modifier.height(16.dp))
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                            ActionRow(painterResource(Res.drawable.call), "Call")
+                            Spacer(modifier = Modifier.height(8.dp))
+                            ActionRow(painterResource(Res.drawable.sms), "Send SMS")
+                            Spacer(modifier = Modifier.height(8.dp))
+                            ActionRow(painterResource(Res.drawable.whatsapp_square), "WhatsApp")
 
-                        ActionRow(painterResource(Res.drawable.call), "Call")
-                        Spacer(modifier = Modifier.height(8.dp))
-                        ActionRow(painterResource(Res.drawable.sms), "Send SMS")
-                        Spacer(modifier = Modifier.height(8.dp))
-                        ActionRow(painterResource(Res.drawable.whatsapp_square), "WhatsApp")
-
-                      //  Spacer(modifier = Modifier.height(16.dp))
-
-
-
+                            //  Spacer(modifier = Modifier.height(16.dp))
 
 
 //                        ElevatedButton(
@@ -184,134 +184,137 @@ fun CompanyDetailsScreen() {
 //                        ) {
 //                            Text("Close")
 //                        }
+                        }
                     }
                 }
-            }
-            if (showLoginSheet) {
-                ModalBottomSheet(
-                    onDismissRequest = { showLoginSheet = false },
-                    sheetState = LoginSheetState,
-                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                    containerColor = Color.White,
-                ) {
-                    Column(modifier = Modifier.padding(20.dp)) {
-                        Text(
-                            text = "NOT Registered",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = PrimaryColor
-                        )
-
-                        Spacer(modifier = Modifier.height(14.dp))
-                        Text(
-                            text = "You Are not a member Yet, Do you have an account?",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Normal,
-                        )
-
-                        Spacer(modifier = Modifier.height(30.dp))
-
-                        ElevatedButton(
-                            modifier = Modifier.fillMaxWidth().shadow(
-                                15.dp,
-                                RoundedCornerShape(12.dp), true, BtnShadowColor, BtnShadowColor
-                            ),
-                            onClick = {},
-                            shape = RoundedCornerShape(12.dp),
-                            colors = ButtonColors(
-                                PrimaryColor,
-                                Color.White,
-                                Color.Unspecified,
-                                Color.Unspecified
-                            ),
-
-                            contentPadding = PaddingValues(vertical = 15.dp)
-                        ) {
-
-
+                if (showLoginSheet) {
+                    ModalBottomSheet(
+                        onDismissRequest = { showLoginSheet = false },
+                        sheetState = LoginSheetState,
+                        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                        containerColor = Color.White,
+                    ) {
+                        Column(modifier = Modifier.padding(20.dp)) {
                             Text(
-                                "LOGIN", style = TextStyle(
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.SemiBold
-                                )
+                                text = "NOT Registered",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = PrimaryColor
                             )
+
+                            Spacer(modifier = Modifier.height(14.dp))
+                            Text(
+                                text = "You Are not a member Yet, Do you have an account?",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Normal,
+                            )
+
+                            Spacer(modifier = Modifier.height(30.dp))
+
+                            ElevatedButton(
+                                modifier = Modifier.fillMaxWidth().shadow(
+                                    15.dp,
+                                    RoundedCornerShape(12.dp), true, BtnShadowColor, BtnShadowColor
+                                ),
+                                onClick = {},
+                                shape = RoundedCornerShape(12.dp),
+                                colors = ButtonColors(
+                                    PrimaryColor,
+                                    Color.White,
+                                    Color.Unspecified,
+                                    Color.Unspecified
+                                ),
+
+                                contentPadding = PaddingValues(vertical = 15.dp)
+                            ) {
+
+
+                                Text(
+                                    "LOGIN", style = TextStyle(
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                )
+
+
+                            }
+
+                            Spacer(modifier = Modifier.height(20.dp))
+
+                            OutlinedButton(
+                                modifier = Modifier.fillMaxWidth(),
+                                onClick = {},
+                                shape = RoundedCornerShape(12.dp),
+                                border = BorderStroke(1.dp, PrimaryColor),
+                                colors = ButtonColors(
+                                    Color.White,
+                                    PrimaryColor,
+                                    Color.Unspecified,
+                                    Color.Unspecified
+                                ),
+
+                                contentPadding = PaddingValues(vertical = 15.dp)
+                            ) {
+
+
+                                Text(
+                                    "SIGNUP", style = TextStyle(
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                )
+
+
+                            }
 
 
                         }
+                    }
+                }
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                if (showBioSheet) {
+                    ModalBottomSheet(
+                        onDismissRequest = { showBioSheet = false },
+                        sheetState = bioSheetState,
+                        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                        containerColor = Color.White
+                    ) {
+                        Column(modifier = Modifier.padding(20.dp)) {
+                            Text(
+                                text = "BIO",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = PrimaryColor
+                            )
 
-                        OutlinedButton(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = {},
-                            shape = RoundedCornerShape(12.dp),
-                            border = BorderStroke(1.dp,PrimaryColor),
-                            colors = ButtonColors(
-                                Color.White,
-                                PrimaryColor,
-                                Color.Unspecified,
-                                Color.Unspecified
-                            ),
-
-                            contentPadding = PaddingValues(vertical = 15.dp)
-                        ) {
-
+                            Spacer(modifier = Modifier.height(22.dp))
 
                             Text(
-                                "SIGNUP", style = TextStyle(
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.SemiBold
-                                )
+                                "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
+                                        "\n" +
+                                        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
+                                        "\n" +
+                                        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
+                                        "\n" +
+                                        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
+                                        "\n" +
+                                        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n",
+                                style = TextStyle(fontSize = 16.sp),
+                                modifier = Modifier.fillMaxWidth()
                             )
+                            Spacer(modifier = Modifier.height(16.dp))
 
 
                         }
-
-
                     }
                 }
-            }
 
-            if (showBioSheet) {
-                ModalBottomSheet(
-                    onDismissRequest = { showBioSheet = false },
-                    sheetState = bioSheetState,
-                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                    containerColor = Color.White
-                ) {
-                    Column(modifier = Modifier.padding(20.dp)) {
-                        Text(
-                            text = "BIO",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = PrimaryColor
-                        )
-
-                        Spacer(modifier = Modifier.height(22.dp))
-
-                        Text(
-                            "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
-                                    "\n" +
-                                    "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
-                                    "\n" +
-                                    "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
-                                    "\n" +
-                                    "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n"+
-                                    "\n"+
-                                    "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n",
-                            style = TextStyle(fontSize = 16.sp),
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-
-
-                    }
-                }
             }
 
         }
 
     }
+
 }
 
 

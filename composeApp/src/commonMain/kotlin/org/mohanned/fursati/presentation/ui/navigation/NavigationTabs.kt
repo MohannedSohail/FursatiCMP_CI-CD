@@ -1,4 +1,3 @@
-// الحل الكامل - تعديل NavigationTabs.kt
 package org.mohanned.fursati.presentation.ui.navigation
 
 import androidx.compose.animation.AnimatedVisibility
@@ -78,7 +77,6 @@ object HomeTab : Tab {
 
     @Composable
     override fun Content() {
-        // استخدام Navigator داخل التاب للتنقل إلى JobDetails
         val navigator = LocalNavigator.currentOrThrow
 
         HomeScreen()
@@ -106,16 +104,6 @@ object BookmarkTab : Tab {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         BookmarkScreen()
-//        Button(
-//            onClick = { navigator.push(FaqsScreen()) },
-//            modifier = Modifier.fillMaxWidth().padding(30.dp)
-//        ) {
-//            Text("Go to Detail (Hide Bottom Nav)")
-//        }
-
-//        Navigator(BookmarkScreen()) { navigator ->
-//            navigator.lastItem.Content()
-//        }
     }
 }
 
@@ -141,10 +129,6 @@ object ProfileTab : Tab {
         val navigator = LocalNavigator.currentOrThrow
 
         ProfileScreen()
-//        CompanyDetailsScreen()
-//        Navigator(ProfileScreen()) { navigator ->
-//            navigator.lastItem.Content()
-//        }
     }
 }
 

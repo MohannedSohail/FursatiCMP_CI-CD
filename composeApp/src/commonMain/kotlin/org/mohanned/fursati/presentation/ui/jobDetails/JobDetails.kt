@@ -65,6 +65,7 @@ import fursaticmp.composeapp.generated.resources.saved
 import fursaticmp.composeapp.generated.resources.share
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mohanned.fursati.presentation.ui.companyDetails.CompanyDetailsScreen
 import org.mohanned.fursati.utils.theme.BtnShadowColor
 import org.mohanned.fursati.utils.theme.JobButtonColor
 import org.mohanned.fursati.utils.theme.JobCardColor
@@ -117,7 +118,7 @@ class JobDetails() : Screen {
 
                     JobDetailsItem(onShareClick = ({
                         showShareSheet=true
-                    }))
+                    }), onItemClick = ({navigator.push(CompanyDetailsScreen())}))
                     DetailsSection()
                     SkillsSection()
                     JobDescriptionSection(onReadMoreClick = ({
@@ -479,14 +480,14 @@ fun DetailsSectionCardItem(cardTitle: String, cardInfo: String) {
 }
 
 @Composable
-fun JobDetailsItem(onShareClick: () -> Unit) {
+fun JobDetailsItem(onShareClick: () -> Unit,onItemClick: () -> Unit) {
     var visibile by remember { mutableStateOf(true) }
     Box(
         modifier = Modifier.fillMaxWidth().padding(top = 25.dp),
         contentAlignment = Alignment.TopEnd
     ) {
 
-        Card(modifier = Modifier.background(JobCardColor), shape = RoundedCornerShape(20.dp)) {
+        Card(modifier = Modifier.background(JobCardColor), onClick = onItemClick ,shape = RoundedCornerShape(20.dp)) {
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 14.dp, top = 12.dp, bottom = 16.dp, end = 5.dp)

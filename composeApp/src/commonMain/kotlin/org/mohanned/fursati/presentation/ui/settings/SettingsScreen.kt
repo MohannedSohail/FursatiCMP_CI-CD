@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
@@ -69,6 +71,7 @@ import fursaticmp.composeapp.generated.resources.pure_company
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mohanned.fursati.presentation.ui.faqs.FaqsScreen
+import org.mohanned.fursati.presentation.ui.help.HelpScreen
 import org.mohanned.fursati.presentation.ui.jobDetails.Section
 import org.mohanned.fursati.utils.theme.JobCardColor
 import org.mohanned.fursati.utils.theme.PrimaryColor
@@ -102,7 +105,7 @@ fun Settings(onClick: () -> Unit)  {
         Box {
             Scaffold {
                 Column(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState(), true)
                         .padding(vertical = 100.dp, horizontal = 20.dp)
                 ) {
                     Section("General Settings")
@@ -118,7 +121,7 @@ fun Settings(onClick: () -> Unit)  {
                         SettingsCard(onClick, painterResource(Res.drawable.faqs), "FAQs")
 
                         SettingsCard(
-                            onClick = ({}),
+                            onClick = ({navigator?.push(HelpScreen())}),
                             painterResource(Res.drawable.help_feedback),
                             "Help & Feedback"
                         )
