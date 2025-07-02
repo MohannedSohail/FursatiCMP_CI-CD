@@ -25,7 +25,6 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
-        working-directory: composeApp
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
