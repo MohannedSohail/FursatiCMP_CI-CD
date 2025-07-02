@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.googleGmsGoogleServices)
+
 }
 
 kotlin {
@@ -35,6 +37,8 @@ kotlin {
         val desktopMain by getting
 
         androidMain.dependencies {
+            implementation("com.google.gms:google-services:4.4.2")
+            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:33.15.0"))
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
@@ -124,6 +128,7 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+
 }
 
 compose.desktop {

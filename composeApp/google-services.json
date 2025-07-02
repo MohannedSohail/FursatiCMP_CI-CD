@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "993149617162",
+    "project_id": "fursati-ci-cd-app",
+    "storage_bucket": "fursati-ci-cd-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993149617162:android:ed44f97bf5c0642547cbf3",
+        "android_client_info": {
+          "package_name": "org.mohanned.fursati"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2Aq1J0uAkLwyTNmRgW8Oq5L0r_ktgOWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

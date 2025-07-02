@@ -1,0 +1,24 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build APK and upload to Firebase App Distribution"
+  lane :firebase_distribution do
+       gradle(
+            task: "assemble",
+            gradle_path: "../gradlew",
+            build_type: "Debug",
+            project_dir: "."
+
+          )
+
+
+    firebase_app_distribution(
+      app: "1:993149617162:android:ed44f97bf5c0642547cbf3",
+      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
+      android_artifact_type: "APK",
+      apk_path: "build/outputs/apk/debug/composeApp-debug.apk",
+      testers: "mohannedsohail@gmail.com",
+      release_notes: "New release via Fastlane 🚀"
+    )
+  end
+end
