@@ -7,8 +7,6 @@
   <br>
   <img src="https://github.com/MohannedSohail/FursatiCMP_CI-CD/actions/workflows/android-ci.yml/badge.svg" alt="Android CI">
   <img src="https://img.shields.io/badge/Release-Firebase-orange?logo=firebase&logoColor=white" alt="Firebase Distribution">
-  <img src="https://img.shields.io/github/license/MohannedSohail/FursatiCMP_CI-CD" alt="License">
-  <img src="https://img.shields.io/github/v/release/MohannedSohail/FursatiCMP_CI-CD" alt="GitHub release">
 </div>
 
 <div align="center">
@@ -323,7 +321,7 @@ We welcome contributions! Please follow these steps:
 *Kotlin & Compose Multiplatform & Android JetpackCompose Developer*
 
 [![GitHub](https://img.shields.io/badge/GitHub-MohannedSohail-black?logo=github)](https://github.com/MohannedSohail)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)]([https://linkedin.com/in/MohannedSohail](https://www.linkedin.com/in/mohannedsoahil/))
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://www.linkedin.com/in/mohannedsoahil/)
 [![Email](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](mailto:mohannedsohail@gmail.com)
 
 </div>
