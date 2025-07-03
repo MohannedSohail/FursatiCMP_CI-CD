@@ -2,9 +2,10 @@
 
 [![Android CI](https://github.com/MohannedSohail/FursatiCMP_CI-CD/actions/workflows/android-ci.yml/badge.svg)](https://github.com/MohannedSohail/FursatiCMP_CI-CD/actions/workflows/android-ci.yml)
 [![Firebase Distribution](https://img.shields.io/badge/Release-Firebase-orange?logo=firebase)](https://console.firebase.google.com/)
-![Platform](https://img.shields.io/badge/platform-Kotlin%20%7C%20Swift%20%7C%20Desktop-blue?logo=kotlin)
-![Language](https://img.shields.io/badge/language-Kotlin%20%7C%20Swift%20%7C%20ComposeMultiplatform-purple)
-[![GitHub release](https://img.shields.io/github/v/release/MohannedSohail/FursatiCMP_CI-CD)](https://github.com/MohannedSohail/FursatiCMP_CI-CD/releases)
+[![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin-Multiplatform-blueviolet?logo=kotlin)](https://kotlinlang.org/lp/multiplatform/)
+[![Compose Multiplatform](https://img.shields.io/badge/JetBrains-Compose%20Multiplatform-brightgreen?logo=jetbrains)](https://www.jetbrains.com/lp/compose-multiplatform/)
+![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Desktop-blue?logo=android)
+
 
 This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
 
