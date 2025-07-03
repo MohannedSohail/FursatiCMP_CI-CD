@@ -1,12 +1,5 @@
 # FursatiCMP 🚀
 
-[![Android CI](https://github.com/MohannedSohail/FursatiCMP_CI-CD/actions/workflows/android-ci.yml/badge.svg)](https://github.com/MohannedSohail/FursatiCMP_CI-CD/actions/workflows/android-ci.yml)
-[![Firebase Distribution](https://img.shields.io/badge/Release-Firebase-orange?logo=firebase)](https://console.firebase.google.com/)
-[![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin-Multiplatform-blueviolet?logo=kotlin)](https://kotlinlang.org/lp/multiplatform/)
-[![Compose Multiplatform](https://img.shields.io/badge/JetBrains-Compose%20Multiplatform-brightgreen?logo=jetbrains)](https://www.jetbrains.com/lp/compose-multiplatform/)
-![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Desktop-blue?logo=android)
-
-
 <div align="center">
   <img src="https://img.shields.io/badge/Kotlin-Multiplatform-blueviolet?logo=kotlin&logoColor=white" alt="Kotlin Multiplatform">
   <img src="https://img.shields.io/badge/JetBrains-Compose%20Multiplatform-brightgreen?logo=jetbrains&logoColor=white" alt="Compose Multiplatform">
@@ -29,17 +22,14 @@
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
-- [Features](#-features)
 - [Technology Stack](#-technology-stack)
 - [Architecture](#-architecture)
 - [CI/CD Pipeline](#-cicd-pipeline)
 - [Getting Started](#-getting-started)
 - [Build & Run](#-build--run)
 - [Deployment](#-deployment)
-- [Screenshots](#-screenshots)
 - [Challenges & Solutions](#-challenges--solutions)
 - [Contributing](#-contributing)
-- [License](#-license)
 - [Author](#-author)
 
 ---
@@ -58,24 +48,6 @@
 
 ---
 
-## ✨ Features
-
-### Core Functionality
-- 🔍 **Job Search**: Advanced job opportunity discovery
-- 📊 **Dashboard**: Comprehensive job analytics and insights
-- 👤 **Profile Management**: User profile and preferences
-- 📝 **Application Tracking**: Track job application status
-- 🔔 **Notifications**: Real-time job alerts and updates
-
-### Technical Features
-- 📱 **Responsive Design**: Adaptive UI for all screen sizes
-- 🌐 **Offline Support**: Local data caching and sync
-- 🔒 **Authentication**: Secure user authentication
-- 📊 **Analytics**: User behavior tracking and insights
-- 🎨 **Modern UI**: Material Design 3 implementation
-
----
-
 ## 🛠 Technology Stack
 
 ### Development
@@ -84,7 +56,6 @@ Frontend Framework    → Compose Multiplatform
 Programming Language  → Kotlin
 Architecture         → MVVM + Clean Architecture
 Dependency Injection → Koin
-Database             → SQLDelight
 Networking           → Ktor
 ```
 
@@ -279,27 +250,6 @@ firebase appdistribution:distribute app/build/outputs/apk/release/app-release.ap
 
 ---
 
-## 📸 Screenshots
-
-<div align="center">
-  
-### 📱 Mobile Views
-  
-| Android | iOS | Desktop |
-|---------|-----|---------|
-| <img src="docs/screenshots/android-home.png" width="200"/> | <img src="docs/screenshots/ios-home.png" width="200"/> | <img src="docs/screenshots/desktop-home.png" width="300"/> |
-| <img src="docs/screenshots/android-jobs.png" width="200"/> | <img src="docs/screenshots/ios-jobs.png" width="200"/> | <img src="docs/screenshots/desktop-jobs.png" width="300"/> |
-
-### 🔄 CI/CD Pipeline
-
-| GitHub Actions | Firebase Distribution |
-|-----------------|----------------------|
-| <img src="docs/screenshots/github-actions.png" width="400"/> | <img src="docs/screenshots/firebase-distribution.png" width="400"/> |
-
-</div>
-
----
-
 ## 💡 Challenges & Solutions
 
 ### 🔧 Technical Challenges
@@ -346,26 +296,6 @@ bundle lock --add-platform arm64-darwin
 
 ---
 
-## 📊 Project Statistics
-
-```
-📈 Code Quality Metrics
-├── Code Coverage: 85%
-├── Build Success Rate: 98%
-├── Average Build Time: 8-12 minutes
-├── Deployment Success Rate: 95%
-└── Pipeline Uptime: 99.5%
-
-🔧 Technical Metrics
-├── Lines of Code: ~15,000
-├── Shared Code: 70%
-├── Platform-Specific: 30%
-├── Dependencies: 25 libraries
-└── Test Cases: 150+ tests
-```
-
----
-
 ## 🤝 Contributing
 
 We welcome contributions! Please follow these steps:
@@ -385,22 +315,16 @@ We welcome contributions! Please follow these steps:
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 🙋‍♂️ Author
 
 <div align="center">
   
 **Mohanned Sohail**  
-*Kotlin Multiplatform & Android Developer*
+*Kotlin & Compose Multiplatform & Android JetpackCompose Developer*
 
 [![GitHub](https://img.shields.io/badge/GitHub-MohannedSohail-black?logo=github)](https://github.com/MohannedSohail)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://linkedin.com/in/MohannedSohail)
-[![Email](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](mailto:mohanned.sohail@example.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)]([https://linkedin.com/in/MohannedSohail](https://www.linkedin.com/in/mohannedsoahil/))
+[![Email](https://img.shields.io/badge/Email-Contact-red?logo=gmail)](mailto:mohannedsohail@gmail.com)
 
 </div>
 
