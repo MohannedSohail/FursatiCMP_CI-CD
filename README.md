@@ -1,3 +1,5 @@
+[![Android CI](https://github.com/MohannedSohail/FursatiCMP_CI-CD/actions/workflows/android-ci.yml/badge.svg)](https://github.com/MohannedSohail/FursatiCMP_CI-CD/actions/workflows/android-ci.yml)
+
 This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
