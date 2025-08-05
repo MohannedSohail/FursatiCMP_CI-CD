@@ -15,6 +15,11 @@
   <p>Featuring automated CI/CD pipeline with GitHub Actions & Firebase Distribution</p>
 </div>
 
+
+![Fursati CMP](CO.png)
+
+![Fursati CMP UI](Cover.png)
+
 ---
 
 ## 📋 Table of Contents
