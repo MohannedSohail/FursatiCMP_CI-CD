@@ -9,6 +9,8 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.googleGmsGoogleServices)
+    alias(libs.plugins.kotlinxSerialization)
+
 
 }
 
@@ -35,7 +37,10 @@ kotlin {
 
     sourceSets {
         val desktopMain by getting
+        jvmMain.dependencies {
+            implementation("media.kamel:kamel-fetcher-resources-jvm:1.0.7")
 
+        }
         androidMain.dependencies {
             implementation("com.google.gms:google-services:4.4.2")
             implementation(project.dependencies.platform("com.google.firebase:firebase-bom:33.15.0"))
@@ -43,6 +48,9 @@ kotlin {
             implementation(libs.androidx.activity.compose)
 
             implementation(libs.ktor.client.okhttp)
+            implementation("media.kamel:kamel-decoder-image-bitmap-resizing:1.0.7") // android only right now
+            implementation("media.kamel:kamel-fetcher-resources-android:1.0.7")
+
 
         }
         iosMain.dependencies {
@@ -83,6 +91,9 @@ kotlin {
 
             //kamel for Image loading
             implementation(libs.kamel)
+            implementation("media.kamel:kamel-decoder-image-vector:1.0.7")
+            implementation("media.kamel:kamel-decoder-svg-std:1.0.7")
+            implementation("media.kamel:kamel-decoder-image-bitmap:1.0.7")
 
             implementation(libs.kotlinx.serialization.json)
         }

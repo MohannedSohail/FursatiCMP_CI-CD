@@ -1,4 +1,4 @@
-package org.mohanned.fursati.presentation.ui.bookmark
+package org.mohanned.fursati.presentation.screens.bookmark
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 
 @Composable
 fun BookmarkScreen() {

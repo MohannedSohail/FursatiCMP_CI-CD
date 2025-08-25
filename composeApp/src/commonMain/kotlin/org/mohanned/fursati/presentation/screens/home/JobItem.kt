@@ -1,5 +1,6 @@
-package org.mohanned.fursati.presentation.ui.home
+package org.mohanned.fursati.presentation.screens.home
 
+import Job
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.tween
@@ -12,18 +13,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,7 +37,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -69,7 +66,7 @@ import org.mohanned.fursati.utils.theme.PrimaryColor
 @Composable
 @Preview
 
-fun JobItem(onClick: () -> Unit,onShareIconClick: () -> Unit) {
+fun JobItem(onClick: () -> Unit,onShareIconClick: () -> Unit,job: Job, ) {
     var visibile by remember { mutableStateOf(true) }
 
     Box(
@@ -95,7 +92,7 @@ fun JobItem(onClick: () -> Unit,onShareIconClick: () -> Unit) {
                     )
                 }
                 Text(
-                    "Web and Mobile Development",
+                    job.title,
                     modifier = Modifier.padding(start = 6.dp, top = 13.dp, bottom = 7.dp),
                     style = TextStyle(
                         fontSize = 16.sp,

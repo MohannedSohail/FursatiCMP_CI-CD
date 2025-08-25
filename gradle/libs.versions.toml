@@ -23,7 +23,7 @@ lifecycleViewmodelCompose = "2.8.2"
 materialIconsExtended = "1.6.10"
 voyagerNavigator = "1.1.0-beta02"
 ktor = "3.1.2"
-kamel = "1.0.3"
+kamel = "1.0.7"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -53,8 +53,7 @@ ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "kto
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 
-kamel = { module = "media.kamel:kamel-image", version.ref = "kamel" }
-
+kamel = { module = "media.kamel:kamel-image-default", version.ref="kamel"}
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }

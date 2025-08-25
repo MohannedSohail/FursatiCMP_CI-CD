@@ -1,19 +1,14 @@
-package org.mohanned.fursati.presentation.ui.navigation
+package org.mohanned.fursati.presentation.screens.navigation
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BookmarkAdd
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Work
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -27,30 +22,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
-import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import cafe.adriel.voyager.transitions.SlideTransition
-import org.jetbrains.compose.resources.painterResource
-import org.mohanned.fursati.presentation.ui.bookmark.BookmarkScreen
-import org.mohanned.fursati.presentation.ui.companyDetails.CompanyDetailsScreen
-import org.mohanned.fursati.presentation.ui.faqs.FaqsScreen
-import org.mohanned.fursati.presentation.ui.help.HelpScreen
-import org.mohanned.fursati.presentation.ui.home.HomeScreen
-import org.mohanned.fursati.presentation.ui.profile.ProfileScreen
-import org.mohanned.fursati.presentation.ui.settings.Settings
+import org.mohanned.fursati.data.repository.FursatiRepository
+import org.mohanned.fursati.presentation.screens.bookmark.BookmarkScreen
+import org.mohanned.fursati.presentation.screens.faqs.FaqsScreen
+import org.mohanned.fursati.presentation.screens.home.HomeScreen
+import org.mohanned.fursati.presentation.screens.profile.ProfileScreen
+import org.mohanned.fursati.presentation.screens.settings.Settings
+import org.mohanned.fursati.presentation.viewmodels.FursatiViewModel
 import org.mohanned.fursati.utils.NavigationTabIndex.BOOKMARK_TAB_INDEX
 import org.mohanned.fursati.utils.NavigationTabIndex.HOME_TAB_INDEX
 import org.mohanned.fursati.utils.NavigationTabIndex.PROFILE_TAB_INDEX
@@ -78,8 +67,8 @@ object HomeTab : Tab {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-
-        HomeScreen()
+        val viewModel = remember { FursatiViewModel(FursatiRepository()) }
+        HomeScreen(viewModel)
     }
 }
 

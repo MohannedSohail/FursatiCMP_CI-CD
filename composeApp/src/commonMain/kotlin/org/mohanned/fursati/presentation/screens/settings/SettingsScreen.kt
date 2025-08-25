@@ -1,16 +1,15 @@
-package org.mohanned.fursati.presentation.ui.settings
+package org.mohanned.fursati.presentation.screens.settings
 
+import Job
+import Terms
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,24 +21,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalBottomSheetDefaults
-import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,15 +46,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import fursaticmp.composeapp.generated.resources.Res
 import fursaticmp.composeapp.generated.resources.call
@@ -68,19 +62,21 @@ import fursaticmp.composeapp.generated.resources.language_pref
 import fursaticmp.composeapp.generated.resources.notification_settings
 import fursaticmp.composeapp.generated.resources.privacy
 import fursaticmp.composeapp.generated.resources.pure_company
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.mohanned.fursati.presentation.ui.faqs.FaqsScreen
-import org.mohanned.fursati.presentation.ui.help.HelpScreen
-import org.mohanned.fursati.presentation.ui.jobDetails.Section
+import org.mohanned.fursati.data.repository.FursatiRepository
+import org.mohanned.fursati.domain.model.UiState
+import org.mohanned.fursati.presentation.screens.help.HelpScreen
+import org.mohanned.fursati.presentation.screens.jobDetails.Section
+import org.mohanned.fursati.presentation.viewmodels.FursatiViewModel
 import org.mohanned.fursati.utils.theme.JobCardColor
 import org.mohanned.fursati.utils.theme.PrimaryColor
 import org.mohanned.fursati.utils.theme.SwitchEnabledColor
-import org.mohanned.fursati.utils.views.ActionRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Settings(onClick: () -> Unit)  {
+fun Settings(onClick: () -> Unit) {
     val navigator = LocalNavigator.current
     val privacySheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -101,6 +97,13 @@ fun Settings(onClick: () -> Unit)  {
     var englishLanguageIsChecked by remember { mutableStateOf(true) }
     var arabicLanguageIsChecked by remember { mutableStateOf(false) }
     var notificationIsChecked by remember { mutableStateOf(false) }
+
+    val viewModel = remember { FursatiViewModel(FursatiRepository()) }
+    val termsState by viewModel.termsState.collectAsState()
+    LaunchedEffect(Dispatchers.IO) {
+//        viewModel.loadTerms()
+
+    }
     MaterialTheme {
         Box {
             Scaffold {
@@ -121,7 +124,7 @@ fun Settings(onClick: () -> Unit)  {
                         SettingsCard(onClick, painterResource(Res.drawable.faqs), "FAQs")
 
                         SettingsCard(
-                            onClick = ({navigator?.push(HelpScreen())}),
+                            onClick = ({ navigator?.push(HelpScreen()) }),
                             painterResource(Res.drawable.help_feedback),
                             "Help & Feedback"
                         )
@@ -154,8 +157,36 @@ fun Settings(onClick: () -> Unit)  {
                     shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
                     containerColor = Color.White,
                 ) {
-                    privacySheetContent()
 
+                    when (termsState) {
+                        is UiState.Error -> {
+                            PrivacySheetContent(
+                                "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
+                                        "\n" +
+                                        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
+                                        "\n" +
+                                        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
+                                        "\n" +
+                                        "\n" +
+                                        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
+                                        "\n" +
+                                        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system",
+                            )
+                        }
+
+                        UiState.Loading -> Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            LinearProgressIndicator(color = PrimaryColor)
+                        }
+
+                        is UiState.Success<Terms> -> {
+                            val terms = (termsState as UiState.Success<Terms>).data
+
+                            PrivacySheetContent(terms.description)
+                        }
+                    }
                 }
             }
 
@@ -259,7 +290,9 @@ fun Settings(onClick: () -> Unit)  {
                         Spacer(modifier = Modifier.height(22.dp))
 
                         Card(
-                            modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(JobCardColor).padding(horizontal = 16.dp, vertical = 16.dp),
+                            modifier = Modifier.clip(RoundedCornerShape(8.dp))
+                                .background(JobCardColor)
+                                .padding(horizontal = 16.dp, vertical = 16.dp),
                         ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth().background(JobCardColor),
@@ -309,7 +342,7 @@ fun Settings(onClick: () -> Unit)  {
 }
 
 @Composable
-private fun privacySheetContent() {
+private fun PrivacySheetContent(content: String) {
     Column(modifier = Modifier.padding(20.dp)) {
         Text(
             text = "Privacy Policy",
@@ -321,16 +354,7 @@ private fun privacySheetContent() {
         Spacer(modifier = Modifier.height(22.dp))
 
         Text(
-            "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
-                    "\n" +
-                    "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
-                    "\n" +
-                    "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
-                    "\n" +
-                    "\n" +
-                    "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system\n" +
-                    "\n" +
-                    "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system",
+            content,
             style = TextStyle(fontSize = 16.sp),
             modifier = Modifier.fillMaxWidth()
         )
